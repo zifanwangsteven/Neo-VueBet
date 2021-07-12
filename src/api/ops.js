@@ -520,6 +520,25 @@ export async function init_util(minutesUntilExpiry, symbol, neo3Dapi) {
   console.log(response)
 }
 
+export async function list_ongoing_pools(neo3Dapi) {
+  const result = await neo3Dapi.getAccount()
+  const { scriptHash } = await neo3Dapi.AddressToScriptHash({ address: result.address })
+  const response = await neo3Dapi.invokeRead({
+    scriptHash: BET_CONTRACT,
+    operation: 'list_ongoing_pools',
+    args: [
+    ],
+    fee: '0.00000001',
+    broadcastOverride: false,
+    signers: [{
+      account: scriptHash,
+      scopes: 1
+    }
+    ]
+  })
+  return response
+}
+
 export async function main() {
   try {
     const client = await connect()
