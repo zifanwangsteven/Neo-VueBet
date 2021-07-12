@@ -92,7 +92,7 @@
 
 <script>
 import { base64ToString, parseTime } from '@/utils'
-import { test_bet, bet, list_pools_by_owner } from '../../api/ops'
+import { test_bet, bet, list_ongoing_pools } from '../../api/ops'
 export default {
   data() {
     return {
@@ -145,7 +145,7 @@ export default {
       const neo3Dapi = window.neo3Dapi_save
       this.tableData = []
       try {
-        const runnable = await list_pools_by_owner(neo3Dapi)
+        const runnable = await list_ongoing_pools(neo3Dapi)
         const result = runnable['stack'][0]['value']
         for (var i in result) {
           const res = result[i]['value']['value']
